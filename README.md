@@ -1,4 +1,4 @@
-##DictGoogle
+#DictGoogle
 
 ![](http://moreinfo.thebigboss.org/moreinfo/dictgoogle1.png)   
 Send to apps for search from iOS5's system wide dictionary.   
