@@ -1,0 +1,16 @@
+Package: jp.r-plus.dictgoogle
+Name: DictGoogle
+Depends: mobilesubstrate, firmware (>= 5.0)
+Version: 0.1
+Architecture: iphoneos-arm
+Description: Google from iOS system wide dictionary
+Maintainer: BigBoss <bigboss@thebigboss.org>
+Author: r_plus <anasthasia.r+dictgoogle@gmail.com>
+Section: Tweaks
+dev: rplus
+Tag: purpose::extension
+Priority: optional
+Sponsor: thebigboss.org <http://thebigboss.org>
+Homepage: http://moreinfo.thebigboss.org/moreinfo/depiction.php?file=dictgoogleDp
+Depiction: http://moreinfo.thebigboss.org/moreinfo/depiction.php?file=dictgoogleDp
+
