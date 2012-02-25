@@ -16,7 +16,15 @@
 //#define tweet
 
 @interface UIReferenceLibraryViewController (DictGoogle)
-- (id)modalHeaderView;
+@property(readonly) NSString * stringToDefine;
+@property(readonly) UIWebView * definitionView;
+@property(readonly) UIView * definitionContainerView;
+@property(readonly) UIView * modalHeaderView;
+@property(readonly) NSString * stylesheet;
+@property(retain) NSString * definitionHTML;
+@property(copy) id dismissCompletionHandler;
+@property(setter=_setRotationDecider:,retain) UIWindow * _rotationDecider;
+
 - (id)stringToDefine;
 - (id)definitionHTML;
 - (void)_dismissModalReferenceView:(id)button;
@@ -65,15 +73,26 @@ static BOOL acceptAppend = NO;
 {
   %orig;
   
+  UISwipeGestureRecognizer *horizonSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDismiss:)];
+  horizonSwipeGesture.direction = (UISwipeGestureRecognizerDirection)(UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight);
+  [self.definitionContainerView addGestureRecognizer:horizonSwipeGesture];
+  [horizonSwipeGesture release];
+  
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.frame = CGRectMake(0, 0, 90, 48);
+  button.frame = CGRectMake(0, 0, 90, 50);
   NSString *pngPath = ([[UIScreen mainScreen] scale] == 2.0) ? @"/Applications/MobileSafari.app/UIButtonBarAction@2x.png" : @"/Applications/MobileSafari.app/UIButtonBarAction.png";
   UIImage *image = [[UIImage alloc] initWithContentsOfFile:pngPath];
   [button setImage:image forState:UIControlStateNormal];
   [button addTarget:self action:@selector(showActionSheet) forControlEvents:UIControlEventTouchUpInside];
   
-  [[self modalHeaderView] addSubview:button];
+  [self.modalHeaderView addSubview:button];
   [image release];
+}
+
+%new(v@:)
+- (void)swipeToDismiss:(id)swipeGesture
+{
+  [self _dismissModalReferenceView:nil];
 }
 
 %new(v@:)
