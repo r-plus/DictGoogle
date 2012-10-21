@@ -13,6 +13,8 @@
 #define KOTOBA_SCHEME @"kotoba://dictionary?search="
 #define SAFARI_SCHEME @"x-web-search:///?"
 
+//#define DEBUG
+
 @interface UIReferenceLibraryViewController (DictGoogle)
 @property(readonly) NSString * stringToDefine;
 @property(readonly) UIWebView * definitionView;
@@ -30,6 +32,10 @@
 
 @interface UIApplication (DictGoogle)
 - (void)applicationOpenURL:(id)url;
+@end
+
+@interface UIDevice (Private)
+- (BOOL)isWildcat;
 @end
 
 @interface DictHandler : NSObject <UIActionSheetDelegate,NSXMLParserDelegate> {
@@ -55,13 +61,24 @@
   [horizonSwipeGesture release];
   
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.frame = CGRectMake(0, 0, 90, 50);
+  CGRect rect = [[UIDevice currentDevice] isWildcat] ? CGRectMake(self.definitionContainerView.frame.size.width - 50, 0, 50, 50) : CGRectMake(0, 0, 90, 50);
+  button.frame = rect;
   NSString *pngPath = ([[UIScreen mainScreen] scale] == 2.0) ? @"/Applications/MobileSafari.app/UIButtonBarAction@2x.png" : @"/Applications/MobileSafari.app/UIButtonBarAction.png";
   UIImage *image = [[UIImage alloc] initWithContentsOfFile:pngPath];
   [button setImage:image forState:UIControlStateNormal];
-  [button addTarget:self action:@selector(showActionSheet) forControlEvents:UIControlEventTouchUpInside];
+  [button addTarget:self action:@selector(showActionSheet:) forControlEvents:UIControlEventTouchUpInside];
   
-  [self.modalHeaderView addSubview:button];
+#ifdef DEBUG
+  NSLog(@"modalHeaderView = %@", self.modalHeaderView);
+  NSLog(@"definitionContainerView = %@", self.definitionContainerView);
+  NSLog(@"definitionView = %@", self.definitionView);
+  NSLog(@"%@", [self.view recursiveDescription]);
+#endif
+
+  if ([[UIDevice currentDevice] isWildcat])
+    [[self.definitionView.subviews objectAtIndex:0] addSubview:button];
+  else
+    [self.modalHeaderView addSubview:button];
   [image release];
 }
 
@@ -71,8 +88,8 @@
   [self _dismissModalReferenceView:nil];
 }
 
-%new(v@:)
-- (void)showActionSheet
+%new(v@:@)
+- (void)showActionSheet:(UIButton *)button
 {
   // NOTE: dh release last line.
   DictHandler *dh = [[DictHandler alloc] init];
@@ -115,7 +132,7 @@
   if (sheet.numberOfButtons == 2)
     [dh searchFromActionButton:SAFARI_SCHEME];
   else
-    [sheet showInView:self.view];
+    [sheet showInView:[[UIDevice currentDevice] isWildcat] ? [UIApplication sharedApplication].keyWindow : self.view];
 }
 %end
 
