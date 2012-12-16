@@ -8,7 +8,6 @@
 #define GURUDIC_SCHEME @"gurudic:"
 #define LONGMAN_EJ_SCHEME @"lejdict://"
 #define POCKET_PROGRESSIVE_EJ_SCHEME @"pocketprogressivee://"
-#define DICTIONARYCOM_SCHEME @"dcom://dictionary/"
 #define LONGMAN_EE_SCHEME @"ldoce://"
 #define KOTOBA_SCHEME @"kotoba://dictionary?search="
 #define SAFARI_SCHEME @"x-web-search:///?"
@@ -118,8 +117,6 @@
     [sheet addButtonWithTitle:@"EBPocket"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:GURUDIC_SCHEME]])
     [sheet addButtonWithTitle:@"Gurudic"];
-  if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:DICTIONARYCOM_SCHEME]])
-    [sheet addButtonWithTitle:@"Dictionary.com"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:LONGMAN_EE_SCHEME]])
     [sheet addButtonWithTitle:@"Longman EE"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:KOTOBA_SCHEME]])
@@ -159,8 +156,6 @@
     [self searchFromActionButton:EBPOCKET_SCHEME];
   if ([buttonTitle isEqualToString:@"Gurudic"])
     [self searchFromActionButton:GURUDIC_SCHEME];
-  if ([buttonTitle isEqualToString:@"Dictionary.com"])
-    [self searchFromActionButton:DICTIONARYCOM_SCHEME];
   if ([buttonTitle isEqualToString:@"Longman EE"])
     [self searchFromActionButton:LONGMAN_EE_SCHEME];
   if ([buttonTitle isEqualToString:@"Kotoba"])
