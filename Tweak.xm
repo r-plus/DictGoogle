@@ -2,6 +2,7 @@
 
 #define DAIJIRIN_SCHEME @"mkdaijirin://jp.monokakido.DAIJIRIN/search?text="
 #define WISDOM_SCHEME @"mkwisdom://jp.monokakido.WISDOM/search?text="
+#define WISDOM2_SCHEME @"mkwisdom2://jp.monokakido.WISDOM2/search?text="
 #define RUIGO_SCHEME @"mkruigo://jp.monokakido.RUIGO/search?text="
 #define EOW_SCHEME @"eow://search?query="
 #define EBPOCKET_SCHEME @"ebpocket://search?text="
@@ -105,6 +106,8 @@
     [sheet addButtonWithTitle:@"Daijirin"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:WISDOM_SCHEME]])
     [sheet addButtonWithTitle:@"Wisdom"];
+  if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:WISDOM2_SCHEME]])
+    [sheet addButtonWithTitle:@"Wisdom2"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:RUIGO_SCHEME]])
     [sheet addButtonWithTitle:@"Ruigo"];
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:EOW_SCHEME]])
@@ -144,6 +147,8 @@
     [self searchFromActionButton:DAIJIRIN_SCHEME];
   if ([buttonTitle isEqualToString:@"Wisdom"])
     [self searchFromActionButton:WISDOM_SCHEME];
+  if ([buttonTitle isEqualToString:@"Wisdom2"])
+    [self searchFromActionButton:WISDOM2_SCHEME];
   if ([buttonTitle isEqualToString:@"Ruigo"])
     [self searchFromActionButton:RUIGO_SCHEME];
   if ([buttonTitle isEqualToString:@"EOW"])
