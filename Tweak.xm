@@ -127,7 +127,8 @@
   if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:SAFARI_SCHEME]])
     [sheet addButtonWithTitle:@"Google"];
   
-  [sheet setAlertSheetStyle:UIBarStyleBlackTranslucent];
+/*  [sheet setAlertSheetStyle:UIBarStyleBlackTranslucent];*/
+  sheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
   [sheet setCancelButtonIndex:[sheet addButtonWithTitle:@"Cancel"]];
   if (sheet.numberOfButtons == 2)
     [dh searchFromActionButton:SAFARI_SCHEME];
